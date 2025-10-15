@@ -184,36 +184,30 @@
 		function traverseTextStatement(text) {
 			let information = "";
 			if (text !== "") {
-				const englishLetterQuant = textEnglishLetterQuant(text);
-				const charactersCount = textCharacters(text).length;
-				const linesCount = textLines(text).length;
-				const wordsCount = textWords(text).length;
-				const sentencesCount = textSentences(text).length;
-				const paragraphsCount = textParagraphs(text).length;
-				const spacesCount = textSpaces(text).length;
-				const tabsCount = textTabs(text).length;
-				const uniqueSpecialsCount = textUniqueSpecials(text).length;
-				const uniqueCharactersCount = textUniqueCharacters(text).length;
-				const uniqueWordsCount = textUniqueWords(text).length;
-				const repeatedWordsCount = textRepeatedWords(text).length;
-				const symbolsCount = textSymbols(text).length;
-				const digitsCount = textDigits(text).length;
-				const lettersCount = textLetters(text).length;
-				information += ".. Quant: " + englishLetterQuant + " " + arrayIntoString(integerFactors(englishLetterQuant), ", ", "{", "}");
-				information += "<br>1. Character: " + charactersCount + " " + arrayIntoString(integerFactors(charactersCount), ", ", "{", "}");
-				information += "<br>2. Line: " + linesCount + " " + arrayIntoString(integerFactors(linesCount), ", ", "{", "}");
-				information += "<br>3. Word: " + wordsCount + " " + arrayIntoString(integerFactors(wordsCount), ", ", "{", "}");
-				information += "<br>4. Sentence: " + sentencesCount + " " + arrayIntoString(integerFactors(sentencesCount), ", ", "{", "}");
-				information += "<br>5. Paragraph: " + paragraphsCount + " " + arrayIntoString(integerFactors(paragraphsCount), ", ", "{", "}");
-				information += "<br>6. Space: " + spacesCount + " " + arrayIntoString(integerFactors(spacesCount), ", ", "{", "}");
-				information += "<br>7. Tab: " + tabsCount + " " + arrayIntoString(integerFactors(tabsCount), ", ", "{", "}");
-				information += "<br>8. Unique Special: " + uniqueSpecialsCount + " " + arrayIntoString(integerFactors(uniqueSpecialsCount), ", ", "{", "}");
-				information += "<br>9. Unique Character: " + uniqueCharactersCount + " " + arrayIntoString(integerFactors(uniqueCharactersCount), ", ", "{", "}");
-				information += "<br>10. Unique Word: " + uniqueWordsCount + " " + arrayIntoString(integerFactors(uniqueWordsCount), ", ", "{", "}");
-				information += "<br>11. Repeated Word: " + repeatedWordsCount + " " + arrayIntoString(integerFactors(repeatedWordsCount), ", ", "{", "}");
-				information += "<br>12. Symbols: " + symbolsCount + " " + arrayIntoString(integerFactors(symbolsCount), ", ", "{", "}");
-				information += "<br>13. Digits: " + digitsCount + " " + arrayIntoString(integerFactors(digitsCount), ", ", "{", "}");
-				information += "<br>14. Letters: " + lettersCount + " " + arrayIntoString(integerFactors(lettersCount), ", ", "{", "}");
+				const data = [
+					englishLetterQuant = ["..", "Quant", textEnglishLetterQuant(text)],
+					charactersCount = ["1.", "Character", textCharacters(text).length],
+					linesCount = ["2.", "Line", textLines(text).length],
+					wordsCount = ["3.", "Word", textWords(text).length],
+					sentencesCount = ["4.", "Sentence", textSentences(text).length],
+					paragraphsCount = ["5.", "Paragraph", textParagraphs(text).length],
+					spacesCount = ["6.", "Space", textSpaces(text).length],
+					tabsCount = ["7.", "Tab", textTabs(text).length],
+					uniqueSpecialsCount = ["8.", "Unique Special", textUniqueSpecials(text).length],
+					uniqueCharactersCount = ["9.", "Unique Character", textUniqueCharacters(text).length],
+					uniqueWordsCount = ["10.", "Unique Word", textUniqueWords(text).length],
+					repeatedWordsCount = ["11.", "Repeated Word", textRepeatedWords(text).length],
+					symbolsCount = ["12.", "Symbol", textSymbols(text).length],
+					digitsCount = ["13.", "Digit", textDigits(text).length],
+					lettersCount = ["14.", "Letter", textLetters(text).length]
+				];
+				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
+				table += '<thead class="thead-light"><tr><th>Index</th><th>Identity</th><th>Value</th><th>Factor</th></tr></thead><tbody>';
+				data.forEach(function (row) {
+					table += '<tr><td>' + row[0] + '</td><td>' + row[1] + '</td><td>' + row[2] + '</td><td>' + arrayIntoString(integerFactors(row[2]), ", ", "{", "}") + '</td></tr>';
+				});
+				table += '</tbody></table></div>';
+				information = table;
 			}
 			else {
 				information = "";
