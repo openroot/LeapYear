@@ -1,0 +1,82 @@
+@font-face {
+	font-family: robotoMono;
+	src: url("Fonts/RobotoMono/static/RobotoMono-Light.ttf");
+}
+
+html,
+body {
+	font-family: robotoMono, "Courier New";
+	font-size: 1.009em;
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+.main-container {
+	flex: 1;
+	display: flex;
+}
+
+.content-wrapper {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+}
+
+.textarea-container {
+	flex: 1;
+	display: flex;
+}
+
+.full-height-textarea {
+	resize: none;
+}
+
+.sidebar {
+	width: 250px;
+	flex-shrink: 0;
+}
+
+@media (max-width: 991.98px) {
+
+	.sidebar {
+		position: fixed;
+		z-index: 1000;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		transform: translateX(-100%);
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.sidebar.show {
+		transform: translateX(0);
+	}
+
+	.sidebar-backdrop {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: none;
+	}
+
+	.sidebar.show+.sidebar-backdrop {
+		display: block;
+	}
+}
+
+#text-information {
+	font-size: .81em;
+}
+
+#text-statement {
+	font-size: .97em;
+}

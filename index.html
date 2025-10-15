@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>LeapYear - Schematic Engine</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+		<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="Source/CSS/Custom.css">
+	</head>
+
+	<body>
+		<header class="bg-dark text-white p-3">
+			<div class="container-fluid d-flex justify-content-between align-items-center">
+				<div class="d-flex align-items-center">
+					<!--<button class="navbar-toggler d-lg-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+						<i class="fas fa-bars text-white"></i>
+					</button>-->
+					<a class="navbar-brand text-white" href="#">LeapYear: Schematic Engine</a>
+				</div>
+				<!--<ul class="nav d-none d-lg-flex">
+					<li class="nav-item">
+						<a class="nav-link text-white" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white" href="#">Log</a>
+					</li>
+				</ul>-->
+			</div>
+		</header>
+
+		<div class="main-container">
+			<!--<aside id="sidebar" class="sidebar bg-light border-right d-lg-block p-3 collapse">
+				<h5 class="mb-3">Action</h5>
+				<div class="list-group mb-4">
+					<a href="#" class="list-group-item list-group-item-action">New</a>
+					<a href="#" class="list-group-item list-group-item-action">Load</a>
+					<a href="#" class="list-group-item list-group-item-action">Settings</a>
+				</div>
+				<hr>
+				<h5 class="mt-4 mb-3">Menu</h5>
+				<div class="list-group">
+					<a href="#" class="list-group-item list-group-item-action">Dashboard</a>
+					<a href="#" class="list-group-item list-group-item-action">Profile</a>
+					<a href="#" class="list-group-item list-group-item-action">Help</a>
+				</div>
+			</aside>
+			<div class="sidebar-backdrop d-lg-none"></div>-->
+			<main class="content-wrapper p-3">
+				<div id="content-space" class="bg-light border p-3 mb-3">
+					<b>Information</b>
+					<div id="text-information"></div>
+				</div>
+				<div class="textarea-container">
+					<textarea id="text-statement" class="form-control full-height-textarea w-100" placeholder="Type text statement here..." aria-label="Statement input"></textarea>
+				</div>
+			</main>
+		</div>
+
+		<div class="bg-light border-top p-3 d-flex justify-content-end">
+			<div class="row mr-0">
+				<button id="action-paste" type="button" class="btn btn-outline-secondary btn-sm ml-2 my-1">Paste</button>
+				<button id="action-reset" type="button" class="btn btn-outline-info btn-sm ml-2 my-1">Reset</button>
+				<button id="action-submit" type="button" class="btn btn-outline-primary btn-sm ml-2 mr-5 my-1">Submit</button>
+				<button id="action-save" type="button" class="btn btn-primary btn-sm ml-2 my-1">Save</button>
+			</div>
+		</div>
+
+		<footer class="bg-dark text-white text-center p-3">
+			<div class="container-fluid">
+				<span>&copy; 2025 - 2026 LeapYear. All rights reserved.</span>
+			</div>
+		</footer>
+
+		<script>
+			$(document).ready(function () {
+				$("#sidebar").on("show.bs.collapse", function () {
+					$(".sidebar-backdrop").show();
+				}).on("hide.bs.collapse", function () {
+					$(".sidebar-backdrop").hide();
+				});
+				$(".sidebar-backdrop").on("click", function () {
+					$("#sidebar").collapse("hide");
+				});
+			});
+		</script>
+	</body>
+
+	<script>
+		var quantumIdentity = {
+			"englishLetter": {
+				"a": 3, "b": 2, "c": 3, "d": 3, "e": 3, "f": 5, "g": 3, "h": 4, "i": 3, "j": 5, "k": 5, "l": 7, "m": 5, "n": 5, "o": 5, "p": 5, "q": 4, "r": 4, "s": 5, "t": 3, "u": 5, "v": 2, "w": 7, "x": 1, "y": 6, "z": 6,
+				"A": 3, "B": 2, "C": 3, "D": 3, "E": 3, "F": 5, "G": 3, "H": 4, "I": 3, "J": 5, "K": 5, "L": 7, "M": 5, "N": 5, "O": 5, "P": 5, "Q": 4, "R": 4, "S": 5, "T": 3, "U": 5, "V": 2, "W": 7, "X": 1, "Y": 6, "Z": 6
+			}
+		};
+
+		function arrayIntoString(arr, delimiter = ", ", prefix = "", suffix = "") {
+			return arr.length > 0 ? prefix + arr.join(delimiter) + suffix : "";
+		}
+		function integerFactors(numb) {
+			let factors = [];
+			if (Number.isInteger(numb) && numb > 0) {
+				numb = parseInt(numb);
+				for (factor = 2; factor < numb; factor++) {
+					if (numb % factor === 0) {
+						factors.push(factor);
+					}
+				}
+			}
+			return factors;
+		}
+		function textEnglishLetterQuant(text) {
+			let englishLetterQuant = 0;
+			if (text !== "") {
+				textCharacters(text).forEach(function (character) {
+					if (quantumIdentity.englishLetter[character] > 0) {
+						englishLetterQuant += quantumIdentity.englishLetter[character];
+					}
+				});
+			}
+			return englishLetterQuant;
+		}
+		function textCharacters(text) {
+			return text.split("") || [];
+		}
+		function textLines(text) {
+			return text.split(/\r?\n/gu) || [];
+		}
+		function textWords(text) {
+			return text.split(/\s+/gu).filter(word => word.trim() !== "") || [];
+		}
+		function textSentences(text) {
+			const sentences = text.split(/[.?!]+[\s\r\n]+/gu).filter(sentence => sentence.trim() !== "");
+			return sentences.map((element, index) => {
+				if (index < sentences.length - 1) {
+					return element + ".";
+				}
+				else {
+					return element;
+				}
+			}) || [];
+		}
+		function textParagraphs(text) {
+			return text.split(/\r?\n\r?\n/gu).filter(paragraph => paragraph.trim() !== "") || [];
+		}
+		function textSpaces(text) {
+			return text.match(/ /gu) || [];
+		}
+		function textTabs(text) {
+			return text.match(/\t/gu) || [];
+		}
+		function textUniqueSpecials(text) {
+			return [...new Set(text.match(/[^\s\w]/gu) || [])];
+		}
+		function textUniqueCharacters(text) {
+			return [...new Set(text)];
+		}
+		function textUniqueWords(text) {
+			return [...new Set(textWords(text))];
+		}
+		function textRepeatedWords(text) {
+			const words = textWords(text);
+			const wordCounts = words.reduce((counts, word) => {
+				counts[word] = (counts[word] || 0) + 1;
+				return counts;
+			}, {});
+			const repeatedWords = words.filter(word => {
+				return wordCounts[word] > 1;
+			}) || [];
+			return [...new Set(repeatedWords)];
+		}
+		function textSymbols(text) {
+			return text.match(/\p{P}|\p{S}/gu) || [];
+		}
+		function textDigits(text) {
+			return text.match(/\d/gu)?.map(Number) || [];
+		}
+		function textLetters(text) {
+			return text.match(/\p{L}/gu) || [];
+		}
+		function traverseTextStatement(text) {
+			let information = "";
+			if (text !== "") {
+				const englishLetterQuant = textEnglishLetterQuant(text);
+				const charactersCount = textCharacters(text).length;
+				const linesCount = textLines(text).length;
+				const wordsCount = textWords(text).length;
+				const sentencesCount = textSentences(text).length;
+				const paragraphsCount = textParagraphs(text).length;
+				const spacesCount = textSpaces(text).length;
+				const tabsCount = textTabs(text).length;
+				const uniqueSpecialsCount = textUniqueSpecials(text).length;
+				const uniqueCharactersCount = textUniqueCharacters(text).length;
+				const uniqueWordsCount = textUniqueWords(text).length;
+				const repeatedWordsCount = textRepeatedWords(text).length;
+				const symbolsCount = textSymbols(text).length;
+				const digitsCount = textDigits(text).length;
+				const lettersCount = textLetters(text).length;
+				information += ".. Quant: " + englishLetterQuant + " " + arrayIntoString(integerFactors(englishLetterQuant), ", ", "{", "}");
+				information += "<br>1. Character: " + charactersCount + " " + arrayIntoString(integerFactors(charactersCount), ", ", "{", "}");
+				information += "<br>2. Line: " + linesCount + " " + arrayIntoString(integerFactors(linesCount), ", ", "{", "}");
+				information += "<br>3. Word: " + wordsCount + " " + arrayIntoString(integerFactors(wordsCount), ", ", "{", "}");
+				information += "<br>4. Sentence: " + sentencesCount + " " + arrayIntoString(integerFactors(sentencesCount), ", ", "{", "}");
+				information += "<br>5. Paragraph: " + paragraphsCount + " " + arrayIntoString(integerFactors(paragraphsCount), ", ", "{", "}");
+				information += "<br>6. Space: " + spacesCount + " " + arrayIntoString(integerFactors(spacesCount), ", ", "{", "}");
+				information += "<br>7. Tab: " + tabsCount + " " + arrayIntoString(integerFactors(tabsCount), ", ", "{", "}");
+				information += "<br>8. Unique Special: " + uniqueSpecialsCount + " " + arrayIntoString(integerFactors(uniqueSpecialsCount), ", ", "{", "}");
+				information += "<br>9. Unique Character: " + uniqueCharactersCount + " " + arrayIntoString(integerFactors(uniqueCharactersCount), ", ", "{", "}");
+				information += "<br>10. Unique Word: " + uniqueWordsCount + " " + arrayIntoString(integerFactors(uniqueWordsCount), ", ", "{", "}");
+				information += "<br>11. Repeated Word: " + repeatedWordsCount + " " + arrayIntoString(integerFactors(repeatedWordsCount), ", ", "{", "}");
+				information += "<br>12. Symbols: " + symbolsCount + " " + arrayIntoString(integerFactors(symbolsCount), ", ", "{", "}");
+				information += "<br>13. Digits: " + digitsCount + " " + arrayIntoString(integerFactors(digitsCount), ", ", "{", "}");
+				information += "<br>14. Letters: " + lettersCount + " " + arrayIntoString(integerFactors(lettersCount), ", ", "{", "}");
+			}
+			else {
+				information = "";
+			}
+			$("#text-information").html(information);
+		}
+		async function pasteClipboardText() {
+			try {
+				const text = await navigator.clipboard.readText();
+				if (text !== "") {
+					$("#text-statement").val(text);
+					traverseTextStatement(text);
+				}
+			} catch (error) {
+				console.error("Failed to read clipboard contents: ", error);
+			}
+		}
+
+		$(document).ready(function () {
+			function submit() {
+				const textStatement = $("#text-statement").val();
+				if (textStatement !== "") {
+					traverseTextStatement(textStatement);
+				}
+			}
+			$("#text-statement").on("keydown", function (e) {
+				if (e.keyCode === 9) {
+					e.preventDefault();
+					const start = $(this).prop("selectionStart");
+					const end = $(this).prop("selectionEnd");
+					const statement = $(this).val();
+					$(this).val(statement.substring(0, start) + "\t" + statement.substring(end));
+					$(this).prop("selectionStart", start + 1);
+					$(this).prop("selectionEnd", start + 1);
+				}
+			});
+			$("#text-statement").on("keyup change", function () {
+				traverseTextStatement($(this).val());
+			});
+			$("#text-statement").on("paste", function (event) {
+				traverseTextStatement(event.originalEvent.clipboardData.getData("text"));
+			});
+			$("#action-paste").click(function () {
+				$("#text-statement").focus();
+				pasteClipboardText();
+			});
+			$("#action-reset").click(function () {
+				$("#text-information").html("");
+				$("#text-statement").val("");
+			});
+			$("#action-submit").click(function () {
+				submit();
+			});
+			submit();
+		});
+	</script>
+</html>
