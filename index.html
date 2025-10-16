@@ -119,6 +119,7 @@
 			}
 			return factors;
 		}
+		// Quant: Quantum Total
 		function textEnglishLetterQuant(text) {
 			let englishLetterQuant = 0;
 			if (text !== "") {
@@ -130,15 +131,19 @@
 			}
 			return englishLetterQuant;
 		}
+		// Character: All Characters
 		function textCharacters(text) {
 			return text.split("") || [];
 		}
+		// Line: All Lines
 		function textLines(text) {
 			return text.split(/\r?\n/gu) || [];
 		}
+		// Word: All Words
 		function textWords(text) {
 			return text.split(/\s+/gu).filter(word => word.trim() !== "") || [];
 		}
+		// Sentence: All Sentences
 		function textSentences(text) {
 			const sentences = text.split(/[.?!]+[\s\r\n]+/gu).filter(sentence => sentence.trim() !== "");
 			return sentences.map((element, index) => {
@@ -150,28 +155,31 @@
 				}
 			}) || [];
 		}
+		// Paragraph: All Paragraphs
 		function textParagraphs(text) {
 			return text.split(/\r?\n\r?\n/gu).filter(paragraph => paragraph.trim() !== "") || [];
 		}
+		// Space: All Spaces
 		function textSpaces(text) {
 			return text.match(/ /gu) || [];
 		}
+		// Tab: All Tabulators
 		function textTabs(text) {
 			return text.match(/\t/gu) || [];
 		}
-		// Mark: Unique Special
+		// Mark: Unique Specials
 		function textUniqueSpecials(text) {
 			return [...new Set(text.match(/[^\s\w]/gu) || [])];
 		}
-		// Texture: Unique Character
+		// Texture: Unique Characters
 		function textUniqueCharacters(text) {
 			return [...new Set(text)];
 		}
-		// Unique: Unique Word
+		// Unique: Unique Words
 		function textUniqueWords(text) {
 			return [...new Set(textWords(text))];
 		}
-		// Repeat: Repeated Word
+		// Repeat: Repeated Words
 		function textRepeatedWords(text) {
 			const words = textWords(text);
 			const wordCounts = words.reduce((counts, word) => {
@@ -183,15 +191,15 @@
 			}) || [];
 			return [...new Set(repeatedWords)];
 		}
-		// Modifier: All Symbol
+		// Modifier: All Symbols
 		function textSymbols(text) {
 			return text.match(/\p{P}|\p{S}/gu) || [];
 		}
-		// Numeric: All Digit
+		// Numeric: All Digits
 		function textDigits(text) {
 			return text.match(/\d/gu)?.map(Number) || [];
 		}
-		// Alphabet: All Letter
+		// Alphabet: All Letters
 		function textLetters(text) {
 			return text.match(/\p{L}/gu) || [];
 		}
