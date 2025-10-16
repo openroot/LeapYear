@@ -32,8 +32,8 @@
 			</div>
 		</header>
 
-		<div class="main-container">
-			<!--<aside id="sidebar" class="sidebar bg-light border-right d-lg-block p-3 collapse">
+		<div id="main-container">
+			<!--<aside id="sidebar" class="bg-light border-right d-lg-block p-3 collapse">
 				<h5 class="mb-3">Action</h5>
 				<div class="list-group mb-4">
 					<a href="#" class="list-group-item list-group-item-action">New</a>
@@ -48,14 +48,21 @@
 					<a href="#" class="list-group-item list-group-item-action">Help</a>
 				</div>
 			</aside>
-			<div class="sidebar-backdrop d-lg-none"></div>-->
-			<main class="content-wrapper p-3">
-				<div id="content-space" class="bg-light border p-3 mb-3">
-					<b>Information</b>
-					<div id="text-information"></div>
+			<div id="sidebar-backdrop" class="d-lg-none"></div>-->
+			<main id="content-wrapper" class="p-3">
+				<div id="context-area" class="bg-light border p-3 mt-1 mb-3">
+					Context
 				</div>
-				<div class="textarea-container">
-					<textarea id="text-statement" class="form-control full-height-textarea w-100" placeholder="Type text statement here..." aria-label="Statement input"></textarea>
+				<div id="content-area" class="row">
+					<div id="content-start" class="col-lg-8 my-1">
+						<div id="textarea-container">
+							<textarea id="text-statement" class="form-control full-height-textarea w-100" placeholder="Type text statement here..." aria-label="Input text statement"></textarea>
+						</div>
+					</div>
+					<div id="content-end" class="col-lg-4 my-1">
+						<b>Information</b>
+						<div id="text-information"></div>
+					</div>
 				</div>
 			</main>
 		</div>
@@ -78,11 +85,11 @@
 		<script>
 			$(document).ready(function () {
 				$("#sidebar").on("show.bs.collapse", function () {
-					$(".sidebar-backdrop").show();
+					$("#sidebar-backdrop").show();
 				}).on("hide.bs.collapse", function () {
-					$(".sidebar-backdrop").hide();
+					$("#sidebar-backdrop").hide();
 				});
-				$(".sidebar-backdrop").on("click", function () {
+				$("#sidebar-backdrop").on("click", function () {
 					$("#sidebar").collapse("hide");
 				});
 			});
@@ -152,15 +159,19 @@
 		function textTabs(text) {
 			return text.match(/\t/gu) || [];
 		}
+		// Mark: Unique Special
 		function textUniqueSpecials(text) {
 			return [...new Set(text.match(/[^\s\w]/gu) || [])];
 		}
+		// Texture: Unique Character
 		function textUniqueCharacters(text) {
 			return [...new Set(text)];
 		}
+		// Unique: Unique Word
 		function textUniqueWords(text) {
 			return [...new Set(textWords(text))];
 		}
+		// Repeat: Repeated Word
 		function textRepeatedWords(text) {
 			const words = textWords(text);
 			const wordCounts = words.reduce((counts, word) => {
@@ -172,12 +183,15 @@
 			}) || [];
 			return [...new Set(repeatedWords)];
 		}
+		// Modifier: All Symbol
 		function textSymbols(text) {
 			return text.match(/\p{P}|\p{S}/gu) || [];
 		}
+		// Numeric: All Digit
 		function textDigits(text) {
 			return text.match(/\d/gu)?.map(Number) || [];
 		}
+		// Alphabet: All Letter
 		function textLetters(text) {
 			return text.match(/\p{L}/gu) || [];
 		}
