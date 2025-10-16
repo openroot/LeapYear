@@ -48,7 +48,7 @@ body {
 	height: 100%;
 }
 
-#text-information {
+#information-container {
 	font-size: .81em;
 }
 
@@ -97,4 +97,9 @@ body {
 .full-height-textarea {
 	resize: none;
 	min-height: 17rem;
+}
+
+.table caption {
+	caption-side: top;
+	text-align: center;
 }

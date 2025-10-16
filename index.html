@@ -60,8 +60,7 @@
 						</div>
 					</div>
 					<div id="content-end" class="col-lg-4 my-1">
-						Information
-						<div id="text-information"></div>
+						<div id="information-container"></div>
 					</div>
 				</div>
 			</main>
@@ -119,32 +118,33 @@
 			}
 			return factors;
 		}
+		/* Text: Text Statement */
 		// Quant: Quantum Total
-		function textEnglishLetterQuant(text) {
-			let englishLetterQuant = 0;
+		function textQuant(text) {
+			let quant = 0;
 			if (text !== "") {
-				textCharacters(text).forEach(function (character) {
+				textCharacter(text).forEach(function (character) {
 					if (quantumIdentity.englishLetter[character] > 0) {
-						englishLetterQuant += quantumIdentity.englishLetter[character];
+						quant += quantumIdentity.englishLetter[character];
 					}
 				});
 			}
-			return englishLetterQuant;
+			return quant;
 		}
 		// Character: All Characters
-		function textCharacters(text) {
+		function textCharacter(text) {
 			return text.split("") || [];
 		}
 		// Line: All Lines
-		function textLines(text) {
+		function textLine(text) {
 			return text.split(/\r?\n/gu) || [];
 		}
 		// Word: All Words
-		function textWords(text) {
+		function textWord(text) {
 			return text.split(/\s+/gu).filter(word => word.trim() !== "") || [];
 		}
 		// Sentence: All Sentences
-		function textSentences(text) {
+		function textSentence(text) {
 			const sentences = text.split(/[.?!]+[\s\r\n]+/gu).filter(sentence => sentence.trim() !== "");
 			return sentences.map((element, index) => {
 				if (index < sentences.length - 1) {
@@ -156,32 +156,32 @@
 			}) || [];
 		}
 		// Paragraph: All Paragraphs
-		function textParagraphs(text) {
+		function textParagraph(text) {
 			return text.split(/\r?\n\r?\n/gu).filter(paragraph => paragraph.trim() !== "") || [];
 		}
 		// Space: All Spaces
-		function textSpaces(text) {
+		function textSpace(text) {
 			return text.match(/ /gu) || [];
 		}
 		// Tab: All Tabulators
-		function textTabs(text) {
+		function textTab(text) {
 			return text.match(/\t/gu) || [];
 		}
 		// Mark: Unique Specials
-		function textUniqueSpecials(text) {
+		function textMark(text) {
 			return [...new Set(text.match(/[^\s\w]/gu) || [])];
 		}
 		// Texture: Unique Characters
-		function textUniqueCharacters(text) {
+		function textTexture(text) {
 			return [...new Set(text)];
 		}
 		// Unique: Unique Words
-		function textUniqueWords(text) {
-			return [...new Set(textWords(text))];
+		function textUnique(text) {
+			return [...new Set(textWord(text))];
 		}
 		// Repeat: Repeated Words
-		function textRepeatedWords(text) {
-			const words = textWords(text);
+		function textRepeat(text) {
+			const words = textWord(text);
 			const wordCounts = words.reduce((counts, word) => {
 				counts[word] = (counts[word] || 0) + 1;
 				return counts;
@@ -192,41 +192,42 @@
 			return [...new Set(repeatedWords)];
 		}
 		// Modifier: All Symbols
-		function textSymbols(text) {
+		function textModifier(text) {
 			return text.match(/\p{P}|\p{S}/gu) || [];
 		}
 		// Numeric: All Digits
-		function textDigits(text) {
+		function textNumeric(text) {
 			return text.match(/\d/gu)?.map(Number) || [];
 		}
 		// Alphabet: All Letters
-		function textLetters(text) {
+		function textAlphabet(text) {
 			return text.match(/\p{L}/gu) || [];
 		}
 		function traverseTextStatement(text) {
 			let information = "";
 			if (text !== "") {
-				const data = [
-					englishLetterQuant = ["..", "Quant", textEnglishLetterQuant(text)],
-					charactersCount = ["1.", "Character", textCharacters(text).length],
-					linesCount = ["2.", "Line", textLines(text).length],
-					wordsCount = ["3.", "Word", textWords(text).length],
-					sentencesCount = ["4.", "Sentence", textSentences(text).length],
-					paragraphsCount = ["5.", "Paragraph", textParagraphs(text).length],
-					spacesCount = ["6.", "Space", textSpaces(text).length],
-					tabsCount = ["7.", "Tab", textTabs(text).length],
-					uniqueSpecialsCount = ["8.", "Unique Special", textUniqueSpecials(text).length],
-					uniqueCharactersCount = ["9.", "Unique Character", textUniqueCharacters(text).length],
-					uniqueWordsCount = ["10.", "Unique Word", textUniqueWords(text).length],
-					repeatedWordsCount = ["11.", "Repeated Word", textRepeatedWords(text).length],
-					symbolsCount = ["12.", "Symbol", textSymbols(text).length],
-					digitsCount = ["13.", "Digit", textDigits(text).length],
-					lettersCount = ["14.", "Letter", textLetters(text).length]
-				];
+				const data = {
+					"Quant": ["..", "Quantum Total", textQuant(text)],
+					"Character": ["1.", "All Characters", textCharacter(text).length],
+					"Line": ["2.", "All Lines", textLine(text).length],
+					"Word": ["3.", "All Words", textWord(text).length],
+					"Sentence": ["4.", "All Sentences", textSentence(text).length],
+					"Paragraph": ["5.", "All Paragraphs", textParagraph(text).length],
+					"Space": ["6.", "All Spaces", textSpace(text).length],
+					"Tab": ["7.", "All Tabulators", textTab(text).length],
+					"Mark": ["8.", "Unique Specials", textMark(text).length],
+					"Texture": ["9.", "Unique Characters", textTexture(text).length],
+					"Unique": ["10.", "Unique Words", textUnique(text).length],
+					"Repeat": ["11.", "Repeated Words", textRepeat(text).length],
+					"Modifier": ["12.", "All Symbols", textModifier(text).length],
+					"Numeric": ["13.", "All Digits", textNumeric(text).length],
+					"Alphabet": ["14.", "All Letters", textAlphabet(text).length]
+				};
 				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
+				table += '<caption>Text: Text Statement</caption>';
 				table += '<thead class="thead-light"><tr><th>Index</th><th>Identity</th><th>Value</th><th>Factor</th></tr></thead><tbody>';
-				data.forEach(function (row) {
-					table += '<tr><td>' + row[0] + '</td><td>' + row[1] + '</td><td>' + row[2] + '</td><td>' + arrayIntoString(integerFactors(row[2]), ", ", "{", "}") + '</td></tr>';
+				Object.entries(data).forEach(([key, value]) => {
+					table += '<tr><td>' + value[0] + '</td><td data-toggle="tooltip" data-placement="right" title="' + value[1] + '">' + key + '</td><td>' + value[2] + '</td><td>' + arrayIntoString(integerFactors(value[2]), ", ", "{", "}") + '</td></tr>';
 				});
 				table += '</tbody></table></div>';
 				information = table;
@@ -234,7 +235,7 @@
 			else {
 				information = "";
 			}
-			$("#text-information").html(information);
+			$("#information-container").html(information);
 		}
 		async function pasteClipboardText() {
 			try {
@@ -255,6 +256,7 @@
 					traverseTextStatement(textStatement);
 				}
 			}
+			$('[data-toggle="tooltip"]').tooltip();
 			$("#text-statement").on("keydown", function (e) {
 				if (e.keyCode === 9) {
 					e.preventDefault();
@@ -277,7 +279,7 @@
 				pasteClipboardText();
 			});
 			$("#action-reset").click(function () {
-				$("#text-information").html("");
+				$("#information-container").html("");
 				$("#text-statement").val("");
 			});
 			$("#action-submit").click(function () {
