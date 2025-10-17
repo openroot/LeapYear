@@ -82,13 +82,13 @@
 		</footer>
 
 		<script>
-			$(document).ready(function () {
-				$("#sidebar").on("show.bs.collapse", function () {
+			$(document).ready(() => {
+				$("#sidebar").on("show.bs.collapse", () => {
 					$("#sidebar-backdrop").show();
-				}).on("hide.bs.collapse", function () {
+				}).on("hide.bs.collapse", () => {
 					$("#sidebar-backdrop").hide();
 				});
-				$("#sidebar-backdrop").on("click", function () {
+				$("#sidebar-backdrop").on("click", () => {
 					$("#sidebar").collapse("hide");
 				});
 			});
@@ -123,7 +123,7 @@
 		function textQuant(text) {
 			let quant = 0;
 			if (text !== "") {
-				textCharacter(text).forEach(function (character) {
+				textCharacter(text).forEach((character) => {
 					if (quantumIdentity.englishLetter[character] > 0) {
 						quant += quantumIdentity.englishLetter[character];
 					}
@@ -226,14 +226,14 @@
 				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
 				table += '<caption>Text: Text Statement</caption>';
 				table += '<thead class="thead-light"><tr><th>Index</th><th>Identity</th><th>Value</th><th>Factor</th></tr></thead><tbody>';
-				Object.entries(data).forEach(function ([key, value]) {
+				Object.entries(data).forEach(([key, value]) => {
 					table += '<tr><td>' + value[0] + '</td><td data-toggle="tooltip" data-placement="right" title="' + value[1] + '">' + key + '</td><td>' + value[2] + '</td><td>' + arrayIntoString(integerFactors(value[2]), ", ", "{", "}") + '</td></tr>';
 				});
 				table += '</tbody></table></div>';
 				information = table;
 			}
 			else {
-				information = "";
+				information = "Information";
 			}
 			$("#information-container").html(information);
 		}
@@ -249,17 +249,14 @@
 			}
 		}
 
-		$(document).ready(function () {
+		$(document).ready(() => {
 			function submit() {
-				const textStatement = $("#text-statement").val();
-				if (textStatement !== "") {
-					traverseTextStatement(textStatement);
-				}
+				traverseTextStatement($("#text-statement").val());
 			}
 			$('[data-toggle="tooltip"]').tooltip();
-			$("#text-statement").on("keydown", function (e) {
-				if (e.keyCode === 9) {
-					e.preventDefault();
+			$("#text-statement").on("keydown", function (event) {
+				if (event.keyCode === 9) {
+					event.preventDefault();
 					const start = $(this).prop("selectionStart");
 					const end = $(this).prop("selectionEnd");
 					const statement = $(this).val();
@@ -271,18 +268,18 @@
 			$("#text-statement").on("keyup change", function () {
 				traverseTextStatement($(this).val());
 			});
-			$("#text-statement").on("paste", function (event) {
+			$("#text-statement").on("paste", (event) => {
 				traverseTextStatement(event.originalEvent.clipboardData.getData("text"));
 			});
-			$("#action-paste").click(function () {
+			$("#action-paste").click(() => {
 				$("#text-statement").focus();
 				pasteClipboardText();
 			});
-			$("#action-reset").click(function () {
+			$("#action-reset").click(() => {
 				$("#information-container").html("");
 				$("#text-statement").val("");
 			});
-			$("#action-submit").click(function () {
+			$("#action-submit").click(() => {
 				submit();
 			});
 			submit();
