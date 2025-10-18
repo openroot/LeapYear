@@ -203,6 +203,13 @@
 		function textAlphabet(text) {
 			return text.match(/\p{L}/gu) || [];
 		}
+		// Matrix: Total Volume
+		function textMatrix(text) {
+			const lines = textLine(text);
+			return lines.reduce((maximumLength, line) => {
+				return Math.max(maximumLength, line.length);
+			}, 0) * lines.length;
+		}
 		function traverseTextStatement(text) {
 			let information = "";
 			if (text !== "") {
@@ -221,7 +228,8 @@
 					"Repeat": ["11.", "Repeated Words", textRepeat(text).length],
 					"Modifier": ["12.", "All Symbols", textModifier(text).length],
 					"Numeric": ["13.", "All Digits", textNumeric(text).length],
-					"Alphabet": ["14.", "All Letters", textAlphabet(text).length]
+					"Alphabet": ["14.", "All Letters", textAlphabet(text).length],
+					"Matrix": ["::.", "Total Volume", textMatrix(text)]
 				};
 				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
 				table += '<caption>Text: Text Statement</caption>';
