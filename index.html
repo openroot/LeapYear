@@ -210,6 +210,14 @@
 				return Math.max(maximumLength, line.length);
 			}, 0) * lines.length;
 		}
+		// Date: All Dates
+		function textDate(text) {
+			return text.match(/(\d{2,4}-\d{1,2}-\d{1,2})|(\d{1,2}\/\d{1,2}\/\d{2,4})/gu) || [];
+		}
+		// Time: All Times
+		function textTime(text) {
+			return text.match(/(\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?\s?(?:AM|PM)?)|(\d{1,2}:\d{2}(:\d{2})?\s?(?:AM|PM)?)/giu) || [];
+		}
 		function traverseTextStatement(text) {
 			let information = "";
 			if (text !== "") {
@@ -229,6 +237,8 @@
 					"Modifier": ["12.", "All Symbols", textModifier(text).length],
 					"Numeric": ["13.", "All Digits", textNumeric(text).length],
 					"Alphabet": ["14.", "All Letters", textAlphabet(text).length],
+					"Date": ["15.", "All Dates", textDate(text).length],
+					"Time": ["16.", "All Times", textTime(text).length],
 					"Matrix": ["::.", "Total Volume", textMatrix(text)]
 				};
 				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
