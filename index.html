@@ -203,13 +203,6 @@
 		function textAlphabet(text) {
 			return text.match(/\p{L}/gu) || [];
 		}
-		// Matrix: Total Volume
-		function textMatrix(text) {
-			const lines = textLine(text);
-			return lines.reduce((maximumLength, line) => {
-				return Math.max(maximumLength, line.length);
-			}, 0) * lines.length;
-		}
 		// Date: All Dates
 		function textDate(text) {
 			return text.match(/(\d{2,4}-\d{1,2}-\d{1,2})|(\d{1,2}\/\d{1,2}\/\d{2,4})/gu) || [];
@@ -217,6 +210,13 @@
 		// Time: All Times
 		function textTime(text) {
 			return text.match(/(\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?\s?(?:AM|PM)?)|(\d{1,2}:\d{2}(:\d{2})?\s?(?:AM|PM)?)/giu) || [];
+		}
+		// Matrix: Total Volume
+		function textMatrix(text) {
+			const lines = textLine(text);
+			return lines.reduce((maximumLength, line) => {
+				return Math.max(maximumLength, line.length);
+			}, 0) * lines.length;
 		}
 		function traverseTextStatement(text) {
 			let information = "";
