@@ -211,6 +211,10 @@
 		function textTime(text) {
 			return text.match(/(\b\d{1,2}\b:\b\d{2}\b:\b\d{2}\b(?:\.\b\d{3}\b)?\s?(?:AM|PM)?)|(\b\d{1,2}\b:\b\d{2}\b(:\b\d{2}\b)?\s?(?:AM|PM)?)/giu) || [];
 		}
+		// Century: All Centuries
+		function textCentury(text) {
+			return (text.match(/(\b\d+(?:st|nd|rd|th)?\s+century+\s+(?:BC|BCE|AD|CE|B\.C\.?|A\.D\.?)\b)/giu) || []).map(century => century.trim());
+		}
 		// Matrix: Total Volume
 		function textMatrix(text) {
 			const lines = textLine(text);
@@ -239,6 +243,7 @@
 					"Alphabet": ["14.", "All Letters", textAlphabet(text).length],
 					"Date": ["15.", "All Dates", textDate(text).length],
 					"Time": ["16.", "All Times", textTime(text).length],
+					"Century": ["17.", "All Centuries", textCentury(text).length],
 					"Matrix": ["::.", "Total Volume", textMatrix(text)]
 				};
 				let table = '<div class="table-responsive-sm"><table class="table table-hover table-borderless table-sm">';
