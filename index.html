@@ -205,11 +205,11 @@
 		}
 		// Date: All Dates
 		function textDate(text) {
-			return text.match(/(\d{2,4}-\d{1,2}-\d{1,2})|(\d{1,2}\/\d{1,2}\/\d{2,4})/gu) || [];
+			return text.match(/(\b\d{2,4}\b-\b\d{1,2}\b-\b\d{1,2}\b)|(\b\d{1,2}\b\/\b\d{1,2}\b\/\b\d{2,4}\b)/gu) || [];
 		}
 		// Time: All Times
 		function textTime(text) {
-			return text.match(/(\d{1,2}:\d{2}:\d{2}(?:\.\d{3})?\s?(?:AM|PM)?)|(\d{1,2}:\d{2}(:\d{2})?\s?(?:AM|PM)?)/giu) || [];
+			return text.match(/(\b\d{1,2}\b:\b\d{2}\b:\b\d{2}\b(?:\.\b\d{3}\b)?\s?(?:AM|PM)?)|(\b\d{1,2}\b:\b\d{2}\b(:\b\d{2}\b)?\s?(?:AM|PM)?)/giu) || [];
 		}
 		// Matrix: Total Volume
 		function textMatrix(text) {
